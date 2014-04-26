@@ -18,6 +18,7 @@ ws.subscribe('sensors', function (chan, names, samples) {
 });
 ws.subscribe('message', function (chan, resultChan, timestamp) {
     //ws.publish(resultChan, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+    ws.publish(resultChan, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
 });
 </script>
 <button id="action">DO Something</button>
