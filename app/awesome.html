@@ -4,22 +4,29 @@
 <script src="js/msgpack.js"></script>
 <script src="js/wearscript-client.js"></script>
 </head>
-<body><script>
+<body>
+<button id="action">DO Something</button>
+<script>
 var URL = "ws://ec2-54-86-82-79.compute-1.amazonaws.com:8081/ws"; 
 var ws = new WearScriptConnection(new WebSocket(URL), "client", "demo");
-ws.subscribe('image', function (chan, timestamp, image) {
-    console.log(JSON.stringify({chan: chan, timestamp: timestamp, image: btoa(image)}));
-    console.log("FUCK ASDASDAS");
-});
+//ws.subscribe('image', function (chan, timestamp, image) {
+//    console.log(JSON.stringify({chan: chan, timestamp: timestamp, image: btoa(image)}));
+//    console.log("FUCK ASDASDAS");
+//});
 
-ws.subscribe('sensors', function (chan, names, samples) {
-    console.log(JSON.stringify({chan: chan, names: names, samples: samples}));
-    console.log("James was here");
-});
-ws.subscribe('message', function (chan, resultChan, timestamp) {
-    //ws.publish(resultChan, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+//ws.subscribe('sensors', function (chan, names, samples) {
+//    console.log(JSON.stringify({chan: chan, names: names, samples: samples}));
+//    console.log("James was here");
+//});
+
+ws.subscribe('client', function (chan, resultChan, timestamp) {
     ws.publish(resultChan, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+    //document.write('chan: ' + chan + ' resultChan ' + resultChan);
 });
+var actionbtn = document.getElementById("action");
+actionbtn.onclick = function() {
+    //ws.publish(resultChanGlobe, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+    ws.publish('demo', timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+};
 </script>
-<button id="action">DO Something</button>
 </body></html>

@@ -29,6 +29,7 @@ function WearScriptConnection(ws, group, device, onopen) {
     this.receive = function (event) {
     a = event;
     console.log('here:' + event)
+    console.log(event)
         var reader = new FileReader();
         reader.addEventListener("loadend", function () {
             var data = msgpack.unpack(reader.result);

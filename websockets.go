@@ -45,12 +45,20 @@ func WSHandler(ws *websocket.Conn) {
 	}
 	// TODO(brandyn): Add lock here when adding users
 	if Managers[userId] == nil {
-		Managers[userId], err = wearscript.ConnectionManagerFactory("server", "0")
+		Managers[userId], err = wearscript.ConnectionManagerFactory("server", "demo")
 		if err != nil {
 			LogPrintf("ws: cm")
 			return
 		}
 		Managers[userId].SubscribeTestHandler()
+        // James addition
+        Managers[userId].Subscribe("client", func (c string, dataBin []byte, data []interface{}) {
+            resultChan, ok := data[1].(string)
+            if !ok {return}
+            Managers[userId].Publish(resultChan, data[2], time.Now().UnixNano() / 1000000000., Managers[userId].GroupDevice())
+			LogPrintf("resultChan" + resultChan)
+        })
+
 		Managers[userId].Subscribe("gist", func(channel string, dataRaw []byte, data []interface{}) {
 			GithubGistHandle(Managers[userId], userId, data)
 		})
