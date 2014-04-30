@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- JavaScript in a webpage -->
+<html><head>
+<script src="js/msgpack.js"></script>
+<script src="js/wearscript-client.js"></script>
+</head>
+<body>
+<button id="action">DO Something</button>
+<script>
+var URL = "ws://ec2-54-84-151-229.compute-1.amazonaws.com8081/ws"; 
+var ws = new WearScriptConnection(new WebSocket(URL), "client", "demo");
+//ws.subscribe('image', function (chan, timestamp, image) {
+//    console.log(JSON.stringify({chan: chan, timestamp: timestamp, image: btoa(image)}));
+//    console.log("FUCK ASDASDAS");
+//});
+
+//ws.subscribe('sensors', function (chan, names, samples) {
+//    console.log(JSON.stringify({chan: chan, names: names, samples: samples}));
+//    console.log("James was here");
+//});
+
+ws.subscribe('client', function (chan, resultChan, timestamp) {
+    ws.publish(resultChan, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+    //document.write('chan: ' + chan + ' resultChan ' + resultChan);
+});
+var actionbtn = document.getElementById("action");
+actionbtn.onclick = function() {
+    //ws.publish(resultChanGlobe, timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+    ws.publish('demo', timestamp, (new Date).getTime() / 1000, ws.groupDevice);
+};
+</script>
+</body></html>

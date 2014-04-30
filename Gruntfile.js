@@ -48,8 +48,8 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
-      dist: 'app',
-      port: 8888
+      dist: 'server/dist',
+      port: 9000
     },
 
     // Watches files for changes and runs tasks based on the changed files
