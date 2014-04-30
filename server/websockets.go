@@ -57,11 +57,17 @@ func WSHandler(ws *websocket.Conn) {
 		//Managers[userId].Subscribe("weariverse", func(channel string, dataRaw []byte, data []interface{}) {
 		//	WeariverseGistHandle(Managers[userId], userId, data)
 		//})
-        Managers[userId].Subscribe("serverMessage", func (c string, dataBin []byte, data []interface{}) {
-            resultChan, ok := data[1].(string)
-            if !ok {return}
-            Managers[userId].Publish(resultChan, data[2], time.Now().UnixNano() / 1000000000., Managers[userId].GroupDevice())
-        })
+        //Managers[userId].Subscribe("ping", func (c string, dataBin []byte, data []interface{}) {
+        //    resultChan, ok := data[1].(string)
+        //    if !ok {return}
+        //    Managers[userId].Publish(resultChan, data[2], time.Now().UnixNano() / 1000000000., Managers[userId].GroupDevice())
+        //    //fmt.PrintLn(fmt.Sprintf(resultChan));
+        //})
+        //Managers[userId].Subscribe("sensors", func (c string, dataBin []byte, data []interface{}) {
+        //    //names := data[1]
+        //    //samples := data[2]
+        //    //fmt.Println(fmt.Sprintf("Sensors[%s] Names[%v] Samples[%v]", c, names, samples))
+        //})
 	}
 	cm := Managers[userId]
 	conn, err := cm.NewConnection(ws) // con
